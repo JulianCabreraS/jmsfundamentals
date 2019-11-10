@@ -1,43 +1,30 @@
-package com.bharath.jmsbasics;
+package com.bharath.jms.basics;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.Enumeration;
 
-public class QueueBrowserDemo {
+public class FirstQueue {
     public static void main(String[] args) {
         InitialContext initialContext = null;
         Connection connection = null;
 
         try {
             initialContext = new InitialContext();
+            Queue queue = (Queue) initialContext.lookup("queue/broker");
             ConnectionFactory connectionFactory = (ConnectionFactory) initialContext.lookup("ConnectionFactory");
             connection = connectionFactory.createConnection();
             Session session = connection.createSession();
-            Queue queue = (Queue) initialContext.lookup("queue/broker");
+
+            //PRODUCER
             MessageProducer producer = session.createProducer(queue);
-            TextMessage message1 = session.createTextMessage("Message 1");
-            TextMessage message2 = session.createTextMessage("Message 2");
-            producer.send(message1);
-            producer.send(message2);
-
-            QueueBrowser browser = session.createBrowser(queue);
-            Enumeration enumeration = browser.getEnumeration();
-
-            while(enumeration.hasMoreElements())
-            {
-                TextMessage message = (TextMessage) enumeration.nextElement();
-                System.out.println("Browsing "+ message.getText());
-            }
-
-
-            //Message
+            TextMessage message = session.createTextMessage("I am the creator of my destiny");
+            producer.send(message);
+            //CONSUMER
             MessageConsumer consumer = session.createConsumer(queue);
             connection.start();
+
             TextMessage textMessage = (TextMessage) consumer.receive(5000);
-            System.out.println("Message received : "+ textMessage.getText());
-            textMessage = (TextMessage) consumer.receive(5000);
             System.out.println("Message received : "+ textMessage.getText());
 
         } catch (NamingException e) {

@@ -1,8 +1,11 @@
-package com.bharath.jmsbasics;
+package com.bharath.jms.basics;
 
 import javax.jms.*;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+
+///EXAMPLE OF HOW TO USE TOPICS
 
 public class FirstTopic {
     public static void main(String[] args)  {

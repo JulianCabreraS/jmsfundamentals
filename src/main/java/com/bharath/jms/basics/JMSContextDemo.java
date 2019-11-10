@@ -1,4 +1,4 @@
-package com.bharath.jmsbasics;
+package com.bharath.jms.basics;
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 
@@ -8,7 +8,7 @@ import javax.jms.Queue;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-
+//EXAMPLE OF USING JMS 2.0
 public class JMSContextDemo {
     public static void main(String[] args) throws NamingException {
         InitialContext context =new InitialContext();
